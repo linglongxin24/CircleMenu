@@ -137,32 +137,9 @@ public class MainActivity extends AppCompatActivity {
                 closeCircleMenu();
             }
         } else {
-            Toast.makeText(this, "点击了第" + (imageViews.indexOf(v)==-1?imageViews2.indexOf(v):imageViews.indexOf(v)) + "个", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "点击了第" + (imageViews.indexOf(v) == -1 ? imageViews2.indexOf(v) : imageViews.indexOf(v)) + "个", Toast.LENGTH_SHORT).show();
         }
 
-    }
-
-
-    /**
-     * 关闭扇形菜单
-     */
-    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
-    private void closeSectorMenu() {
-        for (int i = 0; i < imageViews.size(); i++) {
-            PointF point = new PointF();
-            int avgAngle = (90 / (imageViews.size() - 1));
-            int angle = avgAngle * i;
-            Log.d(TAG, "angle=" + angle);
-            point.x = (float) Math.cos(angle * (Math.PI / 180)) * radius1;
-            point.y = (float) -Math.sin(angle * (Math.PI / 180)) * radius1;
-            Log.d(TAG, point.toString());
-            ObjectAnimator objectAnimatorX = ObjectAnimator.ofFloat(imageViews.get(i), "translationX", point.x, 0);
-            ObjectAnimator objectAnimatorY = ObjectAnimator.ofFloat(imageViews.get(i), "translationY", point.y, 0);
-            AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.setDuration(500);
-            animatorSet.play(objectAnimatorX).with(objectAnimatorY);
-            animatorSet.start();
-        }
     }
 
     /**
@@ -178,14 +155,49 @@ public class MainActivity extends AppCompatActivity {
             point.x = (float) Math.cos(angle * (Math.PI / 180)) * radius1;
             point.y = (float) -Math.sin(angle * (Math.PI / 180)) * radius1;
             Log.d(TAG, point.toString());
+            /**
+             * 第一个参数代表要操作的对象
+             * 第二个参数代表要操作的对象的属性
+             * 第三个参数代表要操作的对象的属性的起始值
+             * 第四个参数代表要操作的对象的属性的终止值
+             */
             ObjectAnimator objectAnimatorX = ObjectAnimator.ofFloat(imageViews.get(i), "translationX", 0, point.x);
             ObjectAnimator objectAnimatorY = ObjectAnimator.ofFloat(imageViews.get(i), "translationY", 0, point.y);
+            /**动画集合，用来编排动画**/
+            AnimatorSet animatorSet = new AnimatorSet();
+            /**设置动画时长**/
+            animatorSet.setDuration(500);
+            /**设置同时播放x方向的位移动画和y方向的位移动画**/
+            animatorSet.play(objectAnimatorX).with(objectAnimatorY);
+            /**开始播放动画**/
+            animatorSet.start();
+        }
+    }
+
+
+    /**
+     * 关闭扇形菜单lin
+     */
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    private void closeSectorMenu() {
+        for (int i = 0; i < imageViews.size(); i++) {
+            PointF point = new PointF();
+            int avgAngle = (90 / (imageViews.size() - 1));
+            int angle = avgAngle * i;
+            Log.d(TAG, "angle=" + angle);
+            point.x = (float) Math.cos(angle * (Math.PI / 180)) * radius1;
+            point.y = (float) -Math.sin(angle * (Math.PI / 180)) * radius1;
+            Log.d(TAG, point.toString());
+
+            ObjectAnimator objectAnimatorX = ObjectAnimator.ofFloat(imageViews.get(i), "translationX", point.x, 0);
+            ObjectAnimator objectAnimatorY = ObjectAnimator.ofFloat(imageViews.get(i), "translationY", point.y, 0);
             AnimatorSet animatorSet = new AnimatorSet();
             animatorSet.setDuration(500);
             animatorSet.play(objectAnimatorX).with(objectAnimatorY);
             animatorSet.start();
         }
     }
+
 
     /**
      * 显示圆形菜单
@@ -222,8 +234,8 @@ public class MainActivity extends AppCompatActivity {
             point.x = (float) Math.cos(angle * (Math.PI / 180)) * radius2;
             point.y = (float) Math.sin(angle * (Math.PI / 180)) * radius2;
             Log.d(TAG, point.toString());
-            ObjectAnimator objectAnimatorX = ObjectAnimator.ofFloat(imageViews2.get(i), "translationX", point.x,0);
-            ObjectAnimator objectAnimatorY = ObjectAnimator.ofFloat(imageViews2.get(i), "translationY", point.y,0);
+            ObjectAnimator objectAnimatorX = ObjectAnimator.ofFloat(imageViews2.get(i), "translationX", point.x, 0);
+            ObjectAnimator objectAnimatorY = ObjectAnimator.ofFloat(imageViews2.get(i), "translationY", point.y, 0);
             AnimatorSet animatorSet = new AnimatorSet();
             animatorSet.setDuration(500);
             animatorSet.play(objectAnimatorX).with(objectAnimatorY);
