@@ -147,14 +147,29 @@ public class MainActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     private void showSectorMenu() {
+        /***第一步，遍历所要展示的菜单ImageView*/
         for (int i = 0; i < imageViews.size(); i++) {
             PointF point = new PointF();
+            /***第二步，根据菜单个数计算每个菜单之间的间隔角度*/
             int avgAngle = (90 / (imageViews.size() - 1));
+            /**第三步，根据间隔角度计算出每个菜单相对于水平线起始位置的真实角度**/
             int angle = avgAngle * i;
             Log.d(TAG, "angle=" + angle);
+            /**
+             * ﻿﻿
+             * 圆点坐标：(x0,y0)
+             * 半径：r
+             * 角度：a0
+             * 则圆上任一点为：（x1,y1）
+             * x1   =   x0   +   r   *   cos(ao   *   3.14   /180   )
+             * y1   =   y0   +   r   *   sin(ao   *   3.14   /180   )
+             */
+            /**第四步，根据每个菜单真实角度计算其坐标值**/
             point.x = (float) Math.cos(angle * (Math.PI / 180)) * radius1;
             point.y = (float) -Math.sin(angle * (Math.PI / 180)) * radius1;
             Log.d(TAG, point.toString());
+
+            /**第五步，根据坐标执行位移动画**/
             /**
              * 第一个参数代表要操作的对象
              * 第二个参数代表要操作的对象的属性
@@ -176,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * 关闭扇形菜单lin
+     * 关闭扇形菜单
      */
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     private void closeSectorMenu() {
@@ -233,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "angle=" + angle);
             point.x = (float) Math.cos(angle * (Math.PI / 180)) * radius2;
             point.y = (float) Math.sin(angle * (Math.PI / 180)) * radius2;
+
             Log.d(TAG, point.toString());
             ObjectAnimator objectAnimatorX = ObjectAnimator.ofFloat(imageViews2.get(i), "translationX", point.x, 0);
             ObjectAnimator objectAnimatorY = ObjectAnimator.ofFloat(imageViews2.get(i), "translationY", point.y, 0);
@@ -243,16 +259,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * ﻿﻿
-     * 圆点坐标：(x0,y0)
-     * 半径：r
-     * 角度：a0
-     * <p>
-     * 则圆上任一点为：（x1,y1）
-     * x1   =   x0   +   r   *   cos(ao   *   3.14   /180   )
-     * y1   =   y0   +   r   *   sin(ao   *   3.14   /180   )
-     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
